@@ -20,6 +20,7 @@ class SearchBooks extends Component {
     render() {
         const books = this.props.books;
         const  query  = this.state.query;
+        const onSelectedChange=this.props.onSelectedChange;
 
         let filteredBooks = [];
        
@@ -67,7 +68,7 @@ class SearchBooks extends Component {
                                             backgroundImage: 'url(' + book.imageLinks.thumbnail + ')'
                                         }}></div>
                                         <div className="book-shelf-changer">
-                                            <select>
+                                            <select onChange={(event) => onSelectedChange(event.target.value, book)}>
                                                 <option value="move" disabled>Move to...</option>
                                                 <option value="currentlyReading">Currently Reading</option>
                                                 <option value="wantToRead">Want to Read</option>

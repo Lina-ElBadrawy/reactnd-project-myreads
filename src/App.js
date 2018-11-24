@@ -52,20 +52,7 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, shelf).then(() => {
       debugger;
       this.getBooks();
-      /*switch (shelf) {
-        case "currentlyReading":
-
-          this.setState((state) => ({ currentlyReading: state.currentlyReading.concat([book]) }));
-          break;
-        case "wantToRead":
-          this.setState((state) => ({ wantToRead: state.wantToRead.concat([book]) }))
-          break;
-        case "read":
-          this.setState((state) => ({ read: state.read.concat([book]) }))
-          break;
-        default:
-          break;
-      }*/
+    
     })
     
   }
@@ -86,7 +73,8 @@ class BooksApp extends React.Component {
           
         )} />
         <Route path='/search' render={() => (
-         <SearchBooks books={this.state.booksList} />
+         <SearchBooks books={this.state.booksList}
+         onSelectedChange={this.moveBook} />
         )} />
 
       </div>
