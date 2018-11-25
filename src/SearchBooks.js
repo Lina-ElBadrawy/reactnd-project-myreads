@@ -31,6 +31,9 @@ class SearchBooks extends Component {
         if (query) {
             this.searchBooks(query);
                 }
+                else{
+                    this.setState({ filteredBooks: [] });
+                }
 
     }
     clearQuery = () => {
