@@ -12,7 +12,7 @@ class SearchBooks extends Component {
         filteredBooks: []
     }
     searchBooks(query) {
-        if (query ) {
+        if (query && query!="" ) {
             BooksAPI.search(query).then((books) => {
                if(books&&books.length>0) 
                 this.setState({ filteredBooks: books })
@@ -82,7 +82,7 @@ class SearchBooks extends Component {
                                     <div className="book-top">
                                         <div className="book-cover" style={{
                                             width: 128, height: 193,
-                                            backgroundImage: 'url(' + book.imageLinks.thumbnail + ')'
+                                            backgroundImage: 'url(' + (book.imageLinks&& book.imageLinks.thumbnail) + ')'
                                         }}></div>
                                         <div className="book-shelf-changer">
                                             <select onChange={(event) => onSelectedChange(event.target.value, book)}>
