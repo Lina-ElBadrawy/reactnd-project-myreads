@@ -29,7 +29,6 @@ class ListBooks extends Component {
 
 
   render() {
-    debugger;
     //const books =this.props.books;
     const { books,
       currentlyReading,

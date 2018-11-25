@@ -3,35 +3,52 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import escapeRegExp from 'escape-string-regexp'
+import * as BooksAPI from './BooksAPI'
 
 class SearchBooks extends Component {
 
-    state={
-        query :''
+    state = {
+        query: '',
+        filteredBooks: []
     }
-    updateQuery = (query) => {
-        this.setState({ query: query.trim() })
-      }
-      clearQuery = () => {
-        this.setState({ query: '' })
-      }
-    
-    
-    render() {
-        const books = this.props.books;
-        const  query  = this.state.query;
-        const onSelectedChange=this.props.onSelectedChange;
+    searchBooks(query) {
+        if (query ) {
+            BooksAPI.search(query).then((books) => {
+               if(books&&books.length>0) 
+                this.setState({ filteredBooks: books })
+                else{
+                    this.setState({ filteredBooks: [] });
+                }
 
-        let filteredBooks = [];
-       
-
-        if (query) {
-            const match = new RegExp(escapeRegExp(query), 'i')
-            filteredBooks = books.filter((book) => match.test(book.title) || match.test(book.authors))
-        } else {
-            filteredBooks = [];
+            },(error)=>{
+                console.log(error);
+            });
         }
 
+    }
+    updateQuery = (query) => {
+        this.setState({ query: query })
+        if (query) {
+            this.searchBooks(query);
+                }
+
+    }
+    clearQuery = () => {
+        this.setState({ query: '' })
+    }
+ 
+
+
+    render() {
+        const books = this.props.books;
+        const query = this.state.query;
+        const onSelectedChange = this.props.onSelectedChange;
+        const filteredBooks = this.state.filteredBooks;
+
+        //  let filteredBooks = [];
+
+
+       
 
         return <div className="search-books">
             <div className="search-books-bar">
@@ -50,16 +67,16 @@ class SearchBooks extends Component {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-                    <input type="text" placeholder="Search by title or author" 
-                     value={query}
-                    onChange={(event) => this.updateQuery(event.target.value)}/>
+                    <input type="text" placeholder="Search by title or author"
+                        value={query}
+                        onChange={(event) => this.updateQuery(event.target.value)} />
 
                 </div>
             </div>
             <div className="search-books-results">
                 <ol className="books-grid">
                     {
-                        filteredBooks.map((book) => (
+                        filteredBooks && filteredBooks.map((book) => (
                             <li key={book.id}>
                                 <div className="book">
                                     <div className="book-top">
@@ -78,7 +95,7 @@ class SearchBooks extends Component {
                                         </div>
                                     </div>
                                     <div className="book-title">{book.title}</div>
-                                    <div className="book-authors">{book.authors.join(', ')}</div>
+                                    <div className="book-authors">{book.authors && book.authors.join(', ')}</div>
                                 </div>
                             </li>
                         ))
