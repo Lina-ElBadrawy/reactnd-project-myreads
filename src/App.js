@@ -50,7 +50,7 @@ class BooksApp extends React.Component {
   moveBook=(shelf,book)=>{
 
     BooksAPI.update(book, shelf).then(() => {
-      debugger;
+      console.log(book);
       this.getBooks();
     
     })
@@ -72,9 +72,11 @@ class BooksApp extends React.Component {
            />
           
         )} />
-        <Route path='/search' render={() => (
+        <Route path='/search' render={({history}) => (
          <SearchBooks books={this.state.booksList}
-         onSelectedChange={this.moveBook} />
+         onSelectedChange={(shelf,book)=>{this.moveBook(shelf,book)
+          history.push('/')
+        }} />
         )} />
 
       </div>

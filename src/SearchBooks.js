@@ -14,8 +14,11 @@ class SearchBooks extends Component {
     searchBooks(query) {
         if (query && query!="" ) {
             BooksAPI.search(query).then((books) => {
-               if(books&&books.length>0) 
+               if(books&&books.length>0) {
+                this.updateShelves(books);
                 this.setState({ filteredBooks: books })
+               }
+               
                 else{
                     this.setState({ filteredBooks: [] });
                 }
@@ -38,6 +41,26 @@ class SearchBooks extends Component {
     }
     clearQuery = () => {
         this.setState({ query: '' })
+    }
+
+    updateShelves=(searchedBooks)=>{
+        return searchedBooks.map((searchedBook)=>{
+            this.props.books.forEach((book)=>{
+                if(searchedBook.id==book.id){
+                    if(book.shelf!=""){
+                    searchedBook.shelf=book.shelf;
+                    }
+                    else{
+                    searchedBook.shelf="none"
+                    }
+
+                    return;
+                }
+                return searchedBook;
+            })
+
+        })
+
     }
  
 
@@ -88,7 +111,8 @@ class SearchBooks extends Component {
                                             backgroundImage: 'url(' + (book.imageLinks&& book.imageLinks.thumbnail) + ')'
                                         }}></div>
                                         <div className="book-shelf-changer">
-                                            <select onChange={(event) => onSelectedChange(event.target.value, book)}>
+                                       
+                                            <select value={book.shelf} onChange={(event) => onSelectedChange(event.target.value, book)}>
                                                 <option value="move" disabled>Move to...</option>
                                                 <option value="currentlyReading">Currently Reading</option>
                                                 <option value="wantToRead">Want to Read</option>
