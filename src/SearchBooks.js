@@ -12,18 +12,18 @@ class SearchBooks extends Component {
         filteredBooks: []
     }
     searchBooks(query) {
-        if (query && query!="" ) {
+        if (query && query != "") {
             BooksAPI.search(query).then((books) => {
-               if(books&&books.length>0) {
-                this.updateShelves(books);
-                this.setState({ filteredBooks: books })
-               }
-               
-                else{
+                if (books && books.length > 0) {
+                    this.updateShelves(books);
+                    this.setState({ filteredBooks: books })
+                }
+
+                else {
                     this.setState({ filteredBooks: [] });
                 }
 
-            },(error)=>{
+            }, (error) => {
                 console.log(error);
             });
         }
@@ -33,26 +33,26 @@ class SearchBooks extends Component {
         this.setState({ query: query })
         if (query) {
             this.searchBooks(query);
-                }
-                else{
-                    this.setState({ filteredBooks: [] });
-                }
+        }
+        else {
+            this.setState({ filteredBooks: [] });
+        }
 
     }
     clearQuery = () => {
         this.setState({ query: '' })
     }
 
-    updateShelves=(searchedBooks)=>{
-        return searchedBooks.map((searchedBook)=>{
-            this.props.books.forEach((book)=>{
-                if(searchedBook.id==book.id){
-                    if(book.shelf!=""){
-                    searchedBook.shelf=book.shelf;
+    updateShelves = (searchedBooks) => {
+        return searchedBooks.map((searchedBook) => {
+            searchedBook.shelf = "none";
+            this.props.books.forEach((book) => {
+                if (searchedBook.id == book.id) {
+
+                    if (book.shelf) {
+                        searchedBook.shelf = book.shelf;
                     }
-                    else{
-                    searchedBook.shelf="none"
-                    }
+
 
                     return;
                 }
@@ -62,7 +62,7 @@ class SearchBooks extends Component {
         })
 
     }
- 
+
 
 
     render() {
@@ -70,11 +70,6 @@ class SearchBooks extends Component {
         const query = this.state.query;
         const onSelectedChange = this.props.onSelectedChange;
         const filteredBooks = this.state.filteredBooks;
-
-        //  let filteredBooks = [];
-
-
-       
 
         return <div className="search-books">
             <div className="search-books-bar">
@@ -108,10 +103,10 @@ class SearchBooks extends Component {
                                     <div className="book-top">
                                         <div className="book-cover" style={{
                                             width: 128, height: 193,
-                                            backgroundImage: 'url(' + (book.imageLinks&& book.imageLinks.thumbnail) + ')'
+                                            backgroundImage: 'url(' + (book.imageLinks && book.imageLinks.thumbnail) + ')'
                                         }}></div>
                                         <div className="book-shelf-changer">
-                                       
+
                                             <select value={book.shelf} onChange={(event) => onSelectedChange(event.target.value, book)}>
                                                 <option value="move" disabled>Move to...</option>
                                                 <option value="currentlyReading">Currently Reading</option>
