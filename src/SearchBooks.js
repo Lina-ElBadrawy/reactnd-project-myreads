@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -52,18 +51,12 @@ class SearchBooks extends Component {
                     if (book.shelf) {
                         searchedBook.shelf = book.shelf;
                     }
-
-
                     return;
                 }
                 return searchedBook;
             })
-
         })
-
     }
-
-
 
     render() {
         const books = this.props.books;

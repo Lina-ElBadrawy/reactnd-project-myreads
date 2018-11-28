@@ -3,41 +3,13 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 class ListBooks extends Component {
-  /*handleChange(event, book) {
-    debugger;
-    BooksAPI.update(book, event.target.value).then(() => {
-      switch (event.target.value) {
-        case "currentlyReading":
-
-          this.setState((state) => ({ currentlyReading: state.currentlyReading.push(book) }));
-          break;
-        case "wantToRead":
-          this.setState((state) => ({ wantToRead: state.wantToRead.push(book) }))
-          break;
-        case "read":
-          this.setState((state) => ({ read: state.read.push(book) }))
-          break;
-        default:
-          break;
-      }
-    })
-  }*/
-
-
-
-
-
-
   render() {
-    //const books =this.props.books;
+    
     const { books,
       currentlyReading,
       wantToRead,
       read,
-      onSelectedChange } = this.props
-    // const onSelectChange=this.props.onSelectChange;
-
-
+      onSelectedChange } = this.props;
 
     return <div className="list-books">
       <div className="list-books-title">
@@ -55,7 +27,7 @@ class ListBooks extends Component {
                       <div className="book-top">
                         <div className="book-cover" style={{
                           width: 128, height: 193,
-                          backgroundImage: 'url(' + (book.imageLinks&&book.imageLinks.thumbnail) + ')'
+                          backgroundImage: 'url(' + (book.imageLinks && book.imageLinks.thumbnail) + ')'
                         }}></div>
                         <div className="book-shelf-changer">
                           <select book={book.id} onChange={(event) => onSelectedChange(event.target.value, book)}>
@@ -88,7 +60,7 @@ class ListBooks extends Component {
                       <div className="book-top">
                         <div className="book-cover" style={{
                           width: 128, height: 193,
-                          backgroundImage: 'url(' + (book.imageLinks&&book.imageLinks.thumbnail) + ')'
+                          backgroundImage: 'url(' + (book.imageLinks && book.imageLinks.thumbnail) + ')'
                         }}></div>
                         <div className="book-shelf-changer">
                           <select value="wantToRead" onChange={(event) => onSelectedChange(event.target.value, book)}>
@@ -120,7 +92,7 @@ class ListBooks extends Component {
                       <div className="book-top">
                         <div className="book-cover" style={{
                           width: 128, height: 193,
-                          backgroundImage: 'url(' + (book.imageLinks&&book.imageLinks.thumbnail) + ')'
+                          backgroundImage: 'url(' + (book.imageLinks && book.imageLinks.thumbnail) + ')'
                         }}></div>
                         <div className="book-shelf-changer">
                           <select value="read" onChange={(event) => onSelectedChange(event.target.value, book)}>
